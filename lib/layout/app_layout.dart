@@ -3,6 +3,7 @@ import '../screens/home/home_screen.dart';
 import '../screens/explore/explore_screen.dart';
 import '../screens/chats/chats_screen.dart';
 import '../screens/profile/profile_screen.dart';
+import '../screens/create_post/create_post_screen.dart';
 import '../theme/app_colors.dart';
 
 class AppLayout extends StatefulWidget {
@@ -38,7 +39,12 @@ class _AppLayoutState extends State<AppLayout> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Action for the center add button
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CreatePostScreen(),
+            ),
+          );
         },
         backgroundColor: AppColors.primaryAccent,
         shape: const CircleBorder(),
