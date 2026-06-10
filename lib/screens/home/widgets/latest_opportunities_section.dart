@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../theme/app_colors.dart';
 
 class LatestOpportunitiesSection extends StatelessWidget {
-  const LatestOpportunitiesSection({Key? key}) : super(key: key);
+  const LatestOpportunitiesSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class LatestOpportunitiesSection extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.iconPurple.withOpacity(0.2),
+                            color: AppColors.iconPurple.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Text(
