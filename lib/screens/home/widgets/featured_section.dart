@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../theme/app_colors.dart';
-import '../../event/event_details.dart';
+import '../../Event/event_details.dart';
 
 class FeaturedSection extends StatelessWidget {
   const FeaturedSection({Key? key}) : super(key: key);
