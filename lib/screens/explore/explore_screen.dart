@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../home/widgets/custom_search_bar.dart';
+import 'package:formative_1/screens/event/event_details.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -14,7 +15,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   final List<String> _categories = ['All', 'Events', 'Opportunities', 'Clubs'];
 
-  // Mock list of recommended items matching the design
   final List<Map<String, dynamic>> _allRecommendations = [
     {
       'title': 'Campus Ambassador Program',
@@ -35,6 +35,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       'iconBg': const Color(0xFF0984E3),
       'badgeColor': const Color(0xFF74B9FF),
       'actionIcon': Icons.chevron_right,
+      'description': 'Participate in green initiatives, workshops, and panel discussions on climate advocacy at ALU.',
     },
     {
       'title': 'Build Your First MVP Workshop',
@@ -45,12 +46,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
       'iconBg': const Color(0xFFD63031),
       'badgeColor': const Color(0xFF74B9FF),
       'actionIcon': Icons.open_in_full,
+      'description': 'Learn rapid prototyping techniques and build a working minimum viable product in this interactive workshop.',
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    // Filter items based on active category
     final filteredRecommendations = _allRecommendations.where((item) {
       if (_selectedCategory == 'All') return true;
       return item['category'] == _selectedCategory;
@@ -64,7 +65,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -95,7 +95,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           width: 8,
                           height: 8,
                           decoration: const BoxDecoration(
-                            color: Color(0xFFFFB703), // Orange/yellow dot
+                            color: Color(0xFFFFB703),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -106,11 +106,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Search Bar
               const CustomSearchBar(hintText: 'Search...'),
               const SizedBox(height: 20),
 
-              // Category Tabs (Horizontal list of pills)
               SizedBox(
                 height: 38,
                 child: ListView.builder(
@@ -166,7 +164,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
               const SizedBox(height: 28),
 
-              // Section Heading
               const Text(
                 'Recommended for you',
                 style: TextStyle(
@@ -177,14 +174,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
               const SizedBox(height: 16),
 
-              // List of cards
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: filteredRecommendations.length,
                 itemBuilder: (context, index) {
                   final item = filteredRecommendations[index];
-                  return Container(
+                  final isEvent = item['type'] == 'Event';
+
+                  Widget card = Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
                       color: AppColors.cardBackground,
@@ -194,7 +192,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Left graphic icon
                         Container(
                           width: 52,
                           height: 52,
@@ -210,7 +207,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         ),
                         const SizedBox(width: 14),
 
-                        // Middle details
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,7 +229,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              // Tag badge
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 10,
@@ -260,7 +255,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           ),
                         ),
 
-                        // Right action icon
                         Align(
                           alignment: Alignment.topRight,
                           child: Padding(
@@ -275,9 +269,33 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ],
                     ),
                   );
+
+                  if (isEvent) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventDetailsScreen(
+                              title: item['title'],
+                              description: item['description'] ?? '',
+                              date: item['subtitle'],
+                              location: 'ALU Campus',
+                              icon: item['icon'],
+                              iconBg: item['iconBg'],
+                              initialJoined: false,
+                              initialInterested: false,
+                            ),
+                          ),
+                        );
+                      },
+                      child: card,
+                    );
+                  }
+                  return card;
                 },
               ),
-              const SizedBox(height: 40), // Bottom padding
+              const SizedBox(height: 40),
             ],
           ),
         ),

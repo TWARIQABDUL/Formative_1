@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
+import 'package:formative_1/screens/event/event_details.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
@@ -9,10 +10,8 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
-  // State for the active RSVP filter tab: 'Going' or 'Interested'
   String _activeTab = 'Going';
 
-  // Mock list of RSVPs matching the design screenshots
   final List<Map<String, dynamic>> _events = [
     {
       'title': 'AI for Social Impact Workshop',
@@ -20,6 +19,7 @@ class _EventsScreenState extends State<EventsScreen> {
       'location': 'Mauritius',
       'image': 'assets/images/ai_workshop.png',
       'isGoing': true,
+      'description': 'Learn how students can use AI to solve community challenges and connect across ALU.',
     },
     {
       'title': 'Pitch Night',
@@ -27,13 +27,15 @@ class _EventsScreenState extends State<EventsScreen> {
       'location': 'Kigali',
       'image': 'assets/images/pitch_night.png',
       'isGoing': true,
+      'description': 'Showcase your idea, get feedback, and connect with mentors.',
     },
     {
       'title': 'Design Thinking Bootcamp',
       'date': 'May 30, 2026',
       'location': 'Kigali',
       'image': 'assets/images/design_thinking.png',
-      'isGoing': false, // Interested
+      'isGoing': false,
+      'description': 'A hands-on workshop to learn the human-centered design framework and solve real-world problems.',
     },
     {
       'title': 'Community Clean Up',
@@ -41,12 +43,12 @@ class _EventsScreenState extends State<EventsScreen> {
       'location': 'Mauritius',
       'image': 'assets/images/clean_up.png',
       'isGoing': true,
+      'description': 'Join us for our monthly community clean-up drive and help keep our surrounding environment clean.',
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    // Filter RSVPs based on the selected tab
     final filteredEvents = _events.where((item) {
       if (_activeTab == 'Going') {
         return item['isGoing'] == true;
@@ -86,7 +88,6 @@ class _EventsScreenState extends State<EventsScreen> {
           child: Column(
             children: [
               const SizedBox(height: 12),
-              // Custom Toggle Tab Bar
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
@@ -95,7 +96,6 @@ class _EventsScreenState extends State<EventsScreen> {
                 ),
                 child: Row(
                   children: [
-                    // 'Going' Tab Button
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
@@ -130,7 +130,6 @@ class _EventsScreenState extends State<EventsScreen> {
                         ),
                       ),
                     ),
-                    // 'Interested' Tab Button
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
@@ -169,7 +168,6 @@ class _EventsScreenState extends State<EventsScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              // Scrollable List of RSVP cards
               Expanded(
                 child: filteredEvents.isEmpty
                     ? Center(
@@ -186,117 +184,130 @@ class _EventsScreenState extends State<EventsScreen> {
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           final item = filteredEvents[index];
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 16),
-                            decoration: BoxDecoration(
-                              color: AppColors.cardBackground,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            padding: const EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                // Left Image container with overlay badge
-                                SizedBox(
-                                  width: 100,
-                                  height: 100,
-                                  child: Stack(
-                                    children: [
-                                      // Image
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: Image.asset(
-                                          item['image'],
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
-                                          errorBuilder: (context, error, stackTrace) {
-                                            // Fallback if image asset loading fails
-                                            return Container(
-                                              width: 100,
-                                              height: 100,
-                                              color: AppColors.searchBackground,
-                                              child: const Icon(
-                                                Icons.image_not_supported_outlined,
-                                                color: AppColors.textSecondary,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      // Bottom gradient status badge
-                                      Positioned(
-                                        bottom: 6,
-                                        left: 6,
-                                        right: 6,
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 4),
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: item['isGoing']
-                                                  ? [
-                                                      const Color(0xFF00B894),
-                                                      const Color(0xFF009470)
-                                                    ]
-                                                  : [
-                                                      const Color(0xFFFFB703),
-                                                      const Color(0xFFE2A300)
-                                                    ],
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              item['isGoing']
-                                                  ? 'Going'
-                                                  : 'Interested',
-                                              style: TextStyle(
-                                                color: item['isGoing']
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EventDetailsScreen(
+                                    title: item['title'],
+                                    description: item['description'] ?? '',
+                                    date: item['date'],
+                                    location: item['location'] + ' Campus',
+                                    image: item['image'],
+                                    initialJoined: item['isGoing'] == true,
+                                    initialInterested: item['isGoing'] == false,
                                   ),
                                 ),
-                                const SizedBox(width: 16),
-                                // Right Details
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        item['title'],
-                                        style: const TextStyle(
-                                          color: AppColors.textPrimary,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 16),
+                              decoration: BoxDecoration(
+                                color: AppColors.cardBackground,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              padding: const EdgeInsets.all(12),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    height: 100,
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(12),
+                                          child: Image.asset(
+                                            item['image'],
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) {
+                                              return Container(
+                                                width: 100,
+                                                height: 100,
+                                                color: AppColors.searchBackground,
+                                                child: const Icon(
+                                                  Icons.image_not_supported_outlined,
+                                                  color: AppColors.textSecondary,
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        "${item['date']} • ${item['location']}",
-                                        style: const TextStyle(
-                                          color: AppColors.textSecondary,
-                                          fontSize: 13,
+                                        Positioned(
+                                          bottom: 6,
+                                          left: 6,
+                                          right: 6,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: item['isGoing']
+                                                    ? [
+                                                        const Color(0xFF00B894),
+                                                        const Color(0xFF009470)
+                                                      ]
+                                                    : [
+                                                        const Color(0xFFFFB703),
+                                                        const Color(0xFFE2A300)
+                                                      ],
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                item['isGoing']
+                                                    ? 'Going'
+                                                    : 'Interested',
+                                                style: TextStyle(
+                                                  color: item['isGoing']
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold,
+                                                  ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          item['title'],
+                                          style: const TextStyle(
+                                            color: AppColors.textPrimary,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          "${item['date']} • ${item['location']}",
+                                          style: const TextStyle(
+                                            color: AppColors.textSecondary,
+                                            fontSize: 13,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
