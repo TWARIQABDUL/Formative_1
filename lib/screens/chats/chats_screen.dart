@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 
 class ChatsScreen extends StatelessWidget {
-  const ChatsScreen({Key? key}) : super(key: key);
+  const ChatsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

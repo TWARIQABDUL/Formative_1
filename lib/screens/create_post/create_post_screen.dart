@@ -3,7 +3,7 @@ import '../../../theme/app_colors.dart';
 import 'widgets/custom_text_field.dart';
 
 class CreatePostScreen extends StatefulWidget {
-  const CreatePostScreen({Key? key}) : super(key: key);
+  const CreatePostScreen({super.key});
 
   @override
   State<CreatePostScreen> createState() => _CreatePostScreenState();
