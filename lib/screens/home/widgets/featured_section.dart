@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../theme/app_colors.dart';
-import '../../Event/event_details.dart';
+import 'package:formative_1/screens/event/event_details.dart';
 
 class FeaturedSection extends StatelessWidget {
-  const FeaturedSection({Key? key}) : super(key: key);
+  const FeaturedSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +74,11 @@ class FeaturedSection extends StatelessWidget {
 
                 const Color(
                     0xFF2C3E50)
-                    .withOpacity(0.8),
+                    .withValues(alpha: 0.8),
 
                 const Color(
                     0xFF0F2027)
-                    .withOpacity(0.9),
+                    .withValues(alpha: 0.9),
               ],
             ),
           ),
@@ -164,24 +164,20 @@ class FeaturedSection extends StatelessWidget {
                     height: 20),
 
                 ElevatedButton(
-
                   onPressed: () {
-
                     Navigator.push(
-
                       context,
-
                       MaterialPageRoute(
-
-                        builder: (_)
-
-                        =>
-                        const EventDetailsScreen(),
-
+                        builder: (_) => const EventDetailsScreen(
+                          title: 'Pitch Night',
+                          description: 'Showcase your idea, get feedback, and connect with mentors.',
+                          date: 'May 24, 2026',
+                          location: 'Kigali Campus',
+                          image: 'assets/images/pitch_night.png',
+                          initialJoined: true,
+                        ),
                       ),
-
                     );
-
                   },
 
                   style:

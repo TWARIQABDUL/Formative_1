@@ -4,7 +4,7 @@ import '../../../theme/app_colors.dart';
 class HeaderSection extends StatelessWidget {
   final String name;
 
-  const HeaderSection({Key? key, required this.name}) : super(key: key);
+  const HeaderSection({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {

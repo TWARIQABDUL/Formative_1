@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../theme/app_colors.dart';
 
 class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({Key? key}) : super(key: key);
+  final String hintText;
+  const CustomSearchBar({
+    super.key,
+    this.hintText = 'Search opportunities, events, people...',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class CustomSearchBar extends StatelessWidget {
             child: TextField(
               style: const TextStyle(color: AppColors.textPrimary),
               decoration: InputDecoration(
-                hintText: 'Search opportunities, events, people...',
+                hintText: hintText,
                 hintStyle: const TextStyle(
                   color: AppColors.textSecondary,
                   fontSize: 14,

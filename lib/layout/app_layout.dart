@@ -7,7 +7,7 @@ import '../screens/create_post/create_post_screen.dart';
 import '../theme/app_colors.dart';
 
 class AppLayout extends StatefulWidget {
-  const AppLayout({Key? key}) : super(key: key);
+  const AppLayout({super.key});
 
   @override
   State<AppLayout> createState() => _AppLayoutState();
