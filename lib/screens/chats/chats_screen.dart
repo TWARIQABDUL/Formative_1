@@ -104,14 +104,14 @@ List<ChatMessage> buildMockMessages() => [
 // MAIN SCREEN WIDGET
 // ─────────────────────────────────────────────
 
-class GroupChatScreen extends StatefulWidget {
-  const GroupChatScreen({super.key});
+class ChatsScreen extends StatefulWidget {
+  const ChatsScreen({super.key});
 
   @override
-  State<GroupChatScreen> createState() => _GroupChatScreenState();
+  State<ChatsScreen> createState() => _ChatsScreenState();
 }
 
-class _GroupChatScreenState extends State<GroupChatScreen> {
+class _ChatsScreenState extends State<ChatsScreen> {
   // State variables
   final TextEditingController _inputController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
