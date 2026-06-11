@@ -13,17 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Formative App',
+      title: 'ALU Connect',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primaryAccent,
-          brightness: Brightness.dark,
-        ),
         scaffoldBackgroundColor: AppColors.background,
-        // Using a standard font to match the clean design
+        colorScheme: ColorScheme.dark(
+          primary: AppColors.primaryAccent,
+          surface: AppColors.cardBackground,
+        ),
         textTheme: GoogleFonts.interTextTheme(
-          ThemeData.dark().textTheme,
+          Theme.of(context).textTheme,
         ).apply(
           bodyColor: AppColors.textPrimary,
           displayColor: AppColors.textPrimary,
